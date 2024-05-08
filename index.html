@@ -9,40 +9,134 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            text-align: center; 
+            background-color: violet;
         }
-        header {
-            text-align: center;
-            padding: 20px 0;
+        .cover-photo {
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            background-image: url('Screenshot\ from\ 2024-05-08\ 19-23-39.png');
+            background-size: cover;
+            background-position: center;
         }
-        #main-content {
+        .post-content {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        h1,h2,h3
+        {
+            font-size: 50px;
+            font-family:'Courier New', Courier, monospace;
         }
         img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
+            display: block; /* To center the image */
+            margin: 0 auto; /* To center the image */
+            max-width: 80%; /* Adjust the maximum width of the image */
+            height: auto; /* Maintain aspect ratio */
         }
+
+        /* Additional styles for post content like headings, paragraphs, etc. */
     </style>
 </head>
 <body>
+    <nav>
+        <a href="#introduction">Introduction</a>
+        <a href="#section1">Section 1</a>
+        <a href="#section2">Ray Casting</a>
+        <a href="#section3">Map parsing</a>
 
-<header>
-    <h1>Welcome to My Blog</h1>
-</header>
+    </nav>
+    <div class="cover-photo" id="Introduction"></div>
+    <div class="post-content">
+        <!-- Your blog post content goes here -->
+        <h1 id="section1">  Maze Game</h1>
+        <p>simple mazegame implemented using SDL2 and some Cool features! i have been working on this project for a while Though much has been made there are more features to be done.</p>
+        <h2 id="section2"> Raycasting! </h2>
+        <img src="raycasting.gif" alt="Animated GIF">
+        <p> RayCasting is a technique to create a 3D projection based on 2D plane. This technique was used for old games when computers didn't have a good performance like today computers. 
+            You can find this rendering method in Wolfstein 3D that is considered to be the first 3D game ever.
+            The game DOOM uses a similar technique known as binary space partitioning (BSP), but this tutorial is focused on the RayCasting implementation only. 
+        </p>
+        <p>
+            A ray is simply a straight line in the 3D space of the camera model. 
+            It is best defined as a direction vector in parameterized form as a point (X0, Y0, Z0) and a direction vector (Dx, Dy, Dz). In this form, 
+            points on the line are ordered and accessed via a single parameter t. For every value of t, a corresponding point (X, Y, Z) on the line is defined
+        </p>
+        <img src="Screenshot from 2024-05-08 21-23-26.png" alt="Direction vector Equation">
+        <p>If the vector is normalized, then the parameter t is distance along the line. The vector can be normalized easily with the following computation: </p>
+        <img src="Screenshot from 2024-05-08 21-27-14.png" alt="Direction vector normalized Equation">
+        <p> these are the principles i built my app on in the following image</p>
+        <img src="Screenshot from 2024-05-08 21-29-59.png" alt="Code">
+        <p> here i am implementing the equations above in the code i'm first defining scope varibles, first i am defining the camera (player pov) state setting it to width of the SDL window.
+            In raycasting, the `cameraX` parameter is often used to calculate the direction of the rays cast from the camera into the scene. The value of `cameraX` typically ranges from -1 to 1, representing the horizontal screen coordinates normalized to the range [-1, 1].
 
-<div id="main-content">
-    <img src="image.jpg" alt="Image Description">
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
-        Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.
-        Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-        inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
-    </p>
-</div>
+            Multiplying `cameraX` by 2 in the line `cameraX = 2 * x / (double)(SCREEN_WIDTH) - 1;` effectively scales the range of `cameraX` from [0, `SCREEN_WIDTH`] to [-1, 1]. Let's break it down:
+            - `x` iterates over the horizontal screen coordinates from 0 to `SCREEN_WIDTH - 1`.
+            - `x / (double)(SCREEN_WIDTH)` normalizes `x` to the range [0, 1].
+            - Multiplying by 2 stretches this range to [0, 2].
+            - Subtracting 1 then shifts the range to [-1, 1].
+            This normalization and scaling process ensures that the rays are evenly distributed across the horizontal field of view of the camera.
+            By scaling cameraX` to the range [-1, 1], you're essentially saying that the left edge of the screen corresponds to `cameraX = -1`, 
+            the center of the screen corresponds to `cameraX = 0`, and the right edge of the screen corresponds to `cameraX = 1`. 
+            This allows for consistent ray direction calculations relative to the camera's orientation and field of view. 
+        </p>
+        <p>
+            The rayDir variable is the implementation of the above equations in order to estimate the distance after the inersection of the rays with horizontal grid or a vertical intersection.
+            the distance is the calculate using the equations defined above. for X and Y respectively.
+        </p>
+        <h3 id="section3"> Map parsing </h3>
+        <p> map parsing is an important feature. it's important to now the current positon of the player to be able to detect collision and also to be able to load different maps accordingly, 
+            such as many other implementations. i defined a 2d array where any integer bigger than 0 would represent a block and any 0's would represent an open space. 
+            then i would loop through this 2d array using a pointer looping over rows by Multiplying the maze pointer with the array width to proceed to the next row such implementation 
+            was done twice once during reading the file and when detecting collision.
+            Example: <br>
+            ```
+            <pre>
+            1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 2 2 2 2 2 0 0 0 0 3 0 3 0 3 0 0 0 1
+            1 0 0 0 0 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 2 0 0 0 2 0 0 0 0 3 0 0 0 3 0 0 0 1
+            1 0 0 0 0 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 2 2 0 2 2 0 0 0 0 3 0 3 0 3 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 4 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 0 4 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 0 0 0 0 5 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 0 4 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 0 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 4 4 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+            1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+            </pre>
+            ```
+            any integer would represent a wall while 0 represent open space.  so i would have 1D array containing each row scanned and i would try to map this 1d array to its corresponding place
+            in th 2d array in memory. buy Multiplying by the number of columns i effectively move to the second row and so forth.  
+        </p>
 
+
+        
+
+    </div>
 </body>
 </html>
-
