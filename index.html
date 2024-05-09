@@ -35,7 +35,7 @@
             text-decoration: none;
             margin: 0 10px;
         }
-        h1,h2,h3
+        h1,h2,h3,h4
         {
             font-size: 50px;
             font-family:'Courier New', Courier, monospace;
@@ -45,6 +45,60 @@
             margin: 0 auto; /* To center the image */
             max-width: 80%; /* Adjust the maximum width of the image */
             height: auto; /* Maintain aspect ratio */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: violet;
+        }
+        th {
+            border: 1px solid violet;
+            background-color: violet;
+            padding: 8px;
+        }
+        th.date {
+            background-color: violet;
+            text-align: left;
+        }
+        th.event {
+            text-align: right;
+        }
+        th {
+            background-color: violet;
+        }
+        p a {
+            color: #007bff; /* Set link color */
+            text-decoration: underline; /* Add underline */
+            text-align: center;
+        }
+
+        /* Style visited links */
+        p a:visited {
+            color: #800080; /* Change color for visited links */
+        }
+
+        /* Style links on hover */
+        p a:hover {
+            color: #ff4500; /* Change color on hover */
+        }
+
+        /* Style active links */
+        p a:active {
+            color: #ff6347; /* Change color when clicked */
+        }
+        p strong 
+        {
+            font-size: 100px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 300;
+            
+        }
+        .left-word {
+            float: left; /* Float the element to the left */
+        }
+        /* Style the second word to align to the right */
+        .right-word {
+            float: right; /* Float the element to the right */
         }
 
         /* Additional styles for post content like headings, paragraphs, etc. */
@@ -56,6 +110,7 @@
         <a href="#section1">Section 1</a>
         <a href="#section2">Ray Casting</a>
         <a href="#section3">Map parsing</a>
+        <a href="#section4">About</a>
 
     </nav>
     <div class="cover-photo" id="Introduction"></div>
@@ -102,7 +157,6 @@
             then i would loop through this 2d array using a pointer looping over rows by Multiplying the maze pointer with the array width to proceed to the next row such implementation 
             was done twice once during reading the file and when detecting collision.
             Example: <br>
-            ```
             <pre>
             1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
             1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
@@ -129,10 +183,39 @@
             1 4 4 4 4 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
             1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
             </pre>
-            ```
             any integer would represent a wall while 0 represent open space.  so i would have 1D array containing each row scanned and i would try to map this 1d array to its corresponding place
             in th 2d array in memory. buy Multiplying by the number of columns i effectively move to the second row and so forth.  
         </p>
+        <h4 id="section4">About</h4>
+        <p>
+            What inspired the project is that i wanted to really understand how computer graphics work as a gamer since childhood i wanted 
+            to really know how the know-how behind cool game such as Ac3, Red dead demption, Sekiro etc.
+            it turns out that it's much more complex than even the concept of raycasting. Which was already hard for me to understand, nevertheless implement.
+            <br>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Event</th>
+                </tr>
+                <tr>
+                    <td>May 4, 2024</td>
+                    <td>Done reading docs related to raycasting Fromed the equations in my notebook</td>
+                </tr>
+                <tr>
+                    <td>May 5, 2024</td>
+                    <td>finished necessary header files and it was time to work on the main rendering algorithm</td>
+                </tr>
+                <tr>
+                    <td>May 5-10, 2024</td>
+                    <td>finished the mazegame with core features. currently trying to add textures and weapons</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </table>
+            <br>
+            <span class="left-word"> <strong> Github:</strong> <a href="https://github.com/abdelrahman21-arch"> Here </a> </span>
+            <span class="right-word"> <strong> Repo:</strong> <a href="https://github.com/abdelrahman21-arch/ALX_mazegame"> Here</a> </span>
+        </p>
+
 
 
         
